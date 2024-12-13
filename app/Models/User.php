@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'activity_level',
     ];
 
     /**
@@ -45,4 +46,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function partnerRequests()
+    {
+        return $this->hasMany(RunningPartnerRequest::class);
+    }
+
+
+    public function runningGroups()
+    {
+        return $this->belongsToMany(RunningGroup::class, 'group_user');
+    }
+
 }
