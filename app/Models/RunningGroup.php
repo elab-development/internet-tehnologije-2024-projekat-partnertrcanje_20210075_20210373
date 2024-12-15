@@ -10,7 +10,7 @@ class RunningGroup extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'creator_id', 'description',
+        'name', 'creator_id', 'location', 
     ];
 
     public function creator()
@@ -18,11 +18,8 @@ class RunningGroup extends Model
         return $this->belongsTo(User::class, 'creator_id');
     }
 
-
     public function participants()
     {
         return $this->belongsToMany(User::class, 'group_user');
     }
-
 }
-
