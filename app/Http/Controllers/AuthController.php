@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator; 
 use Illuminate\Support\Facades\Log;
-
-
+use Illuminate\Support\Facades\Password;  
 
 class AuthController extends Controller
 {
@@ -86,4 +85,56 @@ public function login(Request $request)
             'message' => 'Logged out successfully!'
         ]);
     }
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string|min:8|confirmed', 
+            'token' => 'required|string',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $status = Password::reset(
+            [
+                'email' => $request->email,
+                'password' => $request->password,
+                'token' => $request->token,
+            ],
+            function ($user) use ($request) {
+                $user->password = Hash::make($request->password);
+                $user->save();
+            }
+        );
+        if ($status != Password::PASSWORD_RESET) {
+            return response()->json(['message' => 'Invalid token or user'], 400);
+        }
+
+    
+        return response()->json(['message' => 'Password has been reset successfully.']);
+    }
+    
+
+public function generateResetToken(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',  
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        // Generisanje tokena
+        $token = Password::createToken($user);
+
+        return response()->json(['token' => $token]);
+    }
+
 }

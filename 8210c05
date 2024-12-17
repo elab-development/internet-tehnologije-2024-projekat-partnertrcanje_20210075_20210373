@@ -1,0 +1,10 @@
+[33m1fa3ace[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
+[33m8210c05[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{1}: commit: Dodata paginacija
+[33m1fa3ace[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{2}: commit: Ubacene rute i testirane
+[33m69d903b[m HEAD@{3}: commit: Napravljene migracije
+[33m37af9c8[m HEAD@{4}: commit: Kreirani modeli
+[33mb9762ba[m HEAD@{5}: pull --rebase origin main (finish): returning to refs/heads/main
+[33mb9762ba[m HEAD@{6}: pull --rebase origin main (pick): Projekat kreiran
+[33m08ba8a2[m HEAD@{7}: pull --rebase origin main (start): checkout 08ba8a2fc77de0765a23945425ffa0a2ee01e6a8
+[33m04d4bab[m HEAD@{8}: Branch: renamed refs/heads/master to refs/heads/main
+[33m04d4bab[m HEAD@{10}: commit (initial): Projekat kreiran

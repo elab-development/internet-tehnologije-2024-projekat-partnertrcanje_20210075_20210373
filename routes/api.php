@@ -6,6 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\API\PartnerRequestController;
 use App\Http\Controllers\API\RunningGroupController;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\RunController;
 
 // Test route
 Route::middleware('api')->get('test', function () {
@@ -22,6 +24,9 @@ Route::middleware('auth:sanctum')->group(function () {
      
     
     Route::post('logout', [AuthController::class, 'logout']);
+     //promena passworda
+     Route::post('tokengen', [AuthController::class, 'generateResetToken']);
+     Route::post('reset', [AuthController::class, 'resetPassword']);
 // User routes
     Route::get('users', [UserController::class, 'index']);
     Route::post('users', [UserController::class, 'store']);
@@ -41,6 +46,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('running-groups', [RunningGroupController::class, 'store']);
     Route::get('running-groups/{id}', [RunningGroupController::class, 'show']);
 
-    
 
+    Route::get('runs', [RunController::class, 'index']);
 });

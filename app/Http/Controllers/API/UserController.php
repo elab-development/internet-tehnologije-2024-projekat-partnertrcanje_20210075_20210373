@@ -15,19 +15,11 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        //Log::info('Fetching all users');
-        //$users = User::all();
-        //Log::info('Users fetched: ', ['users' => $users]);
-        //return response()->json($users, 200);
-        $users = User::query();
-
-        if ($request->has('activity_level')) {
-            $users->where('activity_level', $request->input('activity_level'));
-        }
-    
-        $paginatedUsers = $users->paginate(10); 
-    
-        return response()->json($paginatedUsers);
+        Log::info('Fetching all users');
+        $users = User::all();
+        Log::info('Users fetched: ', ['users' => $users]);
+        return response()->json($users, 200);
+        
     }
 
     public function store(Request $request)
