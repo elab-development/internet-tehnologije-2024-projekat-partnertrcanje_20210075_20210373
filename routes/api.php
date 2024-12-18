@@ -20,7 +20,7 @@ Route::middleware('api')->get('test', function () {
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-
+Route::get('search', [UserController::class, 'search'])->name('users.search');
 
 
 // Sanctum authenticated routes

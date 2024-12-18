@@ -93,6 +93,17 @@ class UserController extends Controller
         return response()->json($users, 200);
     }
 
+    public function search(Request $request)
+{
+    $users = User::query()
+        ->filterByName($request->name)
+        ->filterByEmail($request->email)
+        ->filterByCreatedAt($request->created_after, $request->created_before)
+        ->paginate(10);
+
+    return response()->json($users);
+}
+
    
  //Log::info('Paginate request received', ['activity_level' => $activityLevel, 'per_page' => $perPage]);
 

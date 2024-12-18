@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens; 
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
@@ -58,4 +59,28 @@ class User extends Authenticatable
         return $this->belongsToMany(RunningGroup::class, 'group_user');
     }
 
+    public function scopeFilterByName(Builder $query, $name)
+    {
+        if ($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        }
+    }
+
+    public function scopeFilterByEmail(Builder $query, $email)
+    {
+        if ($email) {
+            $query->where('email', $email);
+        }
+    }
+
+    public function scopeFilterByCreatedAt(Builder $query, $createdAfter, $createdBefore)
+    {
+        if ($createdAfter) {
+            $query->where('created_at', '>=', $createdAfter);
+        }
+
+        if ($createdBefore) {
+            $query->where('created_at', '<=', $createdBefore);
+        }
+    }
 }
