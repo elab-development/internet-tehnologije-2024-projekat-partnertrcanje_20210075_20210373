@@ -8,6 +8,10 @@ use App\Http\Controllers\API\RunningGroupController;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RunController;
+use App\Http\Controllers\FileUploadController;
+
+Route::get('upload', [FileUploadController::class, 'index'])->name('upload.form');
+Route::post('upload', [FileUploadController::class, 'store'])->name('upload.store');
 
 // Test route
 Route::middleware('api')->get('test', function () {
