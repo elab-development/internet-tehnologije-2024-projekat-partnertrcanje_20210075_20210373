@@ -9,6 +9,7 @@ use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\ActivityLogController;
 
 Route::get('upload', [FileUploadController::class, 'index'])->name('upload.form');
 Route::post('upload', [FileUploadController::class, 'store'])->name('upload.store');
@@ -52,4 +53,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     Route::get('runs', [RunController::class, 'index']);
+
+    Route::post('activity-log', [ActivityLogController::class, 'store']);
+    Route::get('activity-logs', [ActivityLogController::class, 'index']);
 });

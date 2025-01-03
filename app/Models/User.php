@@ -83,4 +83,9 @@ class User extends Authenticatable
             $query->where('created_at', '<=', $createdBefore);
         }
     }
+        public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
+    
 }
