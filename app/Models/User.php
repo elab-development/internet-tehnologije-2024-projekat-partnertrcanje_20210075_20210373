@@ -50,7 +50,12 @@ class User extends Authenticatable
     }
     public function partnerRequests()
     {
-        return $this->hasMany(RunningPartnerRequest::class);
+        return $this->hasMany(PartnerRequest::class);
+    }
+
+     public function partner()
+    {
+        return $this->belongsTo(Partner::class); // Korisnik pripada jednom partneru
     }
 
 

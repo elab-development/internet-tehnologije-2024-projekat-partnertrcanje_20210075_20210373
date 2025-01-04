@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\API\PartnerController;
 
 Route::get('upload', [FileUploadController::class, 'index'])->name('upload.form');
 Route::post('upload', [FileUploadController::class, 'store'])->name('upload.store');
@@ -44,6 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('partner-requests', [PartnerRequestController::class, 'index']);
     Route::post('partner-requests', [PartnerRequestController::class, 'store']);
     Route::get('partner-requests/{id}', [PartnerRequestController::class, 'show']);
+    Route::delete('partner-requests/del/{id}', [PartnerRequestController::class, 'destroy']);
     Route::get('partner-requests/group/{group_id}', [PartnerRequestController::class, 'getGroupRequests']);
 
     // RunningGroup routes
@@ -56,4 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('activity-log', [ActivityLogController::class, 'store']);
     Route::get('activity-logs', [ActivityLogController::class, 'index']);
+
+    Route::post('partner/connect', [PartnerController::class, 'connect']);
+
 });

@@ -13,6 +13,7 @@ class PartnerRequest extends Model
 
     protected $fillable = [
         'user_id',
+        'partner_id',
         'location',
         'availability',
     ];

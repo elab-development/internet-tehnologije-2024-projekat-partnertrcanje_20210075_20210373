@@ -23,11 +23,11 @@ class PartnerRequestController extends Controller
         // Validacija zahteva
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
+            'partner_id' => 'required|exists:partners,id',
             'location' => 'required|string|max:255',
             'availability' => 'required|string|max:255',
         ]);
 
-        // Kreiranje partner zahtjeva
         $partnerRequest = PartnerRequest::create($validated);
         Log::info('Partner request created: ', ['partnerRequest' => $partnerRequest]);
 
@@ -54,9 +54,9 @@ class PartnerRequestController extends Controller
         $validated = $request->validate([
             'location' => 'sometimes|string|max:255',
             'availability' => 'sometimes|string|max:255',
+            'partner_id' => 'sometimes|exists:partners,id',
         ]);
 
-        // Ažuriranje partner zahtjeva
         $partnerRequest->update($validated);
         return response()->json($partnerRequest, Response::HTTP_OK);
     }
