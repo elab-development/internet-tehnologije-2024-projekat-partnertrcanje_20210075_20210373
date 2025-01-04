@@ -14,6 +14,7 @@ class PartnerRequest extends Model
     protected $fillable = [
         'user_id',
         'partner_id',
+        'group_id',
         'location',
         'availability',
     ];
@@ -26,6 +27,11 @@ class PartnerRequest extends Model
     public function partner()
     {
         return $this->belongsTo(Partner::class);
+    }
+
+    public function runningGroup()
+    {
+        return $this->belongsTo(RunningGroup::class, 'group_id');  // Veza sa grupama
     }
 }
 

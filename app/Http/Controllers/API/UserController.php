@@ -77,12 +77,7 @@ class UserController extends Controller
         return response()->json(['message' => 'User deleted'], 200);
     }
 
-    public function activeUsers()
-    {
-        // Pretpostavimo da "active" korisnici imaju neki kriterijum, poput datuma poslednje aktivnosti
-        $activeUsers = User::where('is_active', true)->get();
-        return response()->json($activeUsers, 200);
-    }
+   
 
     public function getUsersByActivity($activity_level)
     {

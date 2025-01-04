@@ -37,7 +37,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('users', [UserController::class, 'index']);
     Route::post('users', [UserController::class, 'store']);
     Route::get('users/{id}', [UserController::class, 'show']);
-    Route::get('users/active', [UserController::class, 'activeUsers']);
     Route::get('users/activities/{activity_level}', [UserController::class, 'getUsersByActivity']);
     
 

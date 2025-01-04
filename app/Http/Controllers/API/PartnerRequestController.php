@@ -19,20 +19,36 @@ class PartnerRequestController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validacija zahteva
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'partner_id' => 'required|exists:partners,id',
-            'location' => 'required|string|max:255',
-            'availability' => 'required|string|max:255',
-        ]);
+{
+    // Validacija zahteva
+    $validated = $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'partner_id' => 'nullable|exists:partners,id',
+        'group_id' => 'nullable|exists:running_groups,id',
+        'location' => 'required|string|max:255',
+        'availability' => 'required|string|max:255',
+    ]);
 
-        $partnerRequest = PartnerRequest::create($validated);
-        Log::info('Partner request created: ', ['partnerRequest' => $partnerRequest]);
-
-        return response()->json($partnerRequest, Response::HTTP_CREATED);
+    if ((!isset($validated['partner_id']) && !isset($validated['group_id'])) ||
+        (isset($validated['partner_id']) && isset($validated['group_id']))) {
+        return response()->json([
+            'error' => 'Morate proslediti ili partner_id ili group_id, ali ne oba.'
+        ], Response::HTTP_BAD_REQUEST);
     }
+
+    $partnerRequest = PartnerRequest::create([
+        'user_id' => $validated['user_id'],
+        'partner_id' => $validated['partner_id'] ?? null, // Postavljamo `partner_id` ako postoji
+        'group_id' => $validated['group_id'] ?? null,     // Postavljamo `group_id` ako postoji
+        'location' => $validated['location'],
+        'availability' => $validated['availability'],
+    ]);
+
+    Log::info('Partner request created: ', ['partnerRequest' => $partnerRequest]);
+
+    return response()->json($partnerRequest, Response::HTTP_CREATED);
+}
+
 
     public function show($id)
     {
@@ -55,6 +71,7 @@ class PartnerRequestController extends Controller
             'location' => 'sometimes|string|max:255',
             'availability' => 'sometimes|string|max:255',
             'partner_id' => 'sometimes|exists:partners,id',
+            'group_id' => 'sometimes|exists:running_groups,id',
         ]);
 
         $partnerRequest->update($validated);

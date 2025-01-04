@@ -22,4 +22,8 @@ class RunningGroup extends Model
     {
         return $this->belongsToMany(User::class, 'group_user');
     }
+    public function partnerRequests()
+    {
+        return $this->hasMany(PartnerRequest::class, 'group_id');
+    }
 }
