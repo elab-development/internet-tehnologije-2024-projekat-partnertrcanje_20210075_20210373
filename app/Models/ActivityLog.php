@@ -21,9 +21,6 @@ class ActivityLog extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function activityLogs()
-    {
-        return $this->hasMany(ActivityLog::class);  
-    }
+   
 }
 
