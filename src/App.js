@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
-import './App.css';
-
+import './App.css'; 
 
 const App = () => {
   return (
