@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './RunnerSearch.css';
+
 
 const runners = [
   { name: 'Ana', city: 'Beograd', level: 'Početnik' },

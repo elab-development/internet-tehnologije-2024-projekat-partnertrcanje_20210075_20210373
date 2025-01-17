@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './EventCreator.css';
+
 
 const EventCreator = () => {
   const [events, setEvents] = useState([]);

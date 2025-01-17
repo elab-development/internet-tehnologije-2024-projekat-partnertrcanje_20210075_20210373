@@ -1,0 +1,33 @@
+.goals-tracker input[type="text"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .goals-tracker .goal-list {
+    margin-top: 20px;
+  }
+  
+  .goals-tracker .goal-list li {
+    background: #f9f9f9;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .goals-tracker .goal-list li:hover {
+    background: #007bff;
+    color: white;
+  }
+  
+  .goals-tracker .goal-list li.completed {
+    text-decoration: line-through;
+    color: gray;
+  }
+  
