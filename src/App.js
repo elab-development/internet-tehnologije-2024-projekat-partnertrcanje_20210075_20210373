@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Contact from './pages/Contact';
 import NotificationSystem from './pages/NotificationSystem';
 import EventCreator from './pages/EventCreator';
+import RunnerSearch from './pages/RunnerSearch';
 import './App.css'; 
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
         <Link to="/contact">Kontakt</Link>
         <Link to="/notifications">Notifikacije</Link>
         <Link to="/event-creator">Kreiranje događaja</Link>
+        <Link to="/runner-search">Pretraga trkača</Link>
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -23,6 +25,7 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/notifications" element={<NotificationSystem />} />
         <Route path="/event-creator" element={<EventCreator />} />
+        <Route path="/runner-search" element={<RunnerSearch />} />
         
       </Routes>
     </Router>
