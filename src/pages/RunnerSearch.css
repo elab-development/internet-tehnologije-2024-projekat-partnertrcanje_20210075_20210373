@@ -1,22 +1,48 @@
-.runner-search input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0 20px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-  
-  .runner-search ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .runner-search li {
-    background: #f9f9f9;
-    margin: 5px 0;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
+/* Input polje */
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* senka oko inputa */
+}
+
+input[type="text"]:focus {
+  border-color: #007bff;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3); /* svetlija senka pri fokusu */
+}
+
+/* Lista rezultata */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  background: #f9f9f9;
+  margin: 10px 0;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* senka za li elemente */
+}
+
+ul li:hover {
+  background-color: #007bff;
+  color: white;
+  transform: translateY(-3px); /* pomeranje stavke pri hoveru */
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2); /* svetlija senka pri hoveru */
+}
+
+ul li:active {
+  transform: translateY(1px); /* efekat pritiskanja stavke */
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.15);
+}
