@@ -7,6 +7,7 @@ import NotificationSystem from './pages/NotificationSystem';
 import EventCreator from './pages/EventCreator';
 import RunnerSearch from './pages/RunnerSearch';
 import GoalsTracker from './pages/GoalsTracker';
+import FilerPaginacija from './pages/FilerPaginacija';
 import './App.css'; 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
         <Link to="/event-creator">Kreiranje događaja</Link>
         <Link to="/runner-search">Pretraga trkača</Link>
         <Link to="/goals-tracker">Ciljevi</Link>
+        <Link to="/filtered-pagination">Trkači</Link>
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -29,6 +31,7 @@ const App = () => {
         <Route path="/event-creator" element={<EventCreator />} />
         <Route path="/runner-search" element={<RunnerSearch />} />
         <Route path="/goals-tracker" element={<GoalsTracker />} />
+        <Route path="/filtered-pagination" element={<FilerPaginacija />} />
         
       </Routes>
     </Router>
