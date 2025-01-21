@@ -1,4 +1,4 @@
-/* Input polje */
+
 input[type="text"] {
   width: 100%;
   padding: 12px;
@@ -8,16 +8,15 @@ input[type="text"] {
   font-size: 16px;
   background-color: #fafafa;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* senka oko inputa */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 input[type="text"]:focus {
   border-color: #007bff;
   background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3); /* svetlija senka pri fokusu */
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3); 
 }
 
-/* Lista rezultata */
 ul {
   list-style-type: none;
   padding: 0;
@@ -32,17 +31,17 @@ ul li {
   border-radius: 8px;
   transition: all 0.3s ease;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* senka za li elemente */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 ul li:hover {
   background-color: #007bff;
   color: white;
-  transform: translateY(-3px); /* pomeranje stavke pri hoveru */
-  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2); /* svetlija senka pri hoveru */
+  transform: translateY(-3px); 
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2);
 }
 
 ul li:active {
-  transform: translateY(1px); /* efekat pritiskanja stavke */
+  transform: translateY(1px); 
   box-shadow: 0 4px 8px rgba(0, 123, 255, 0.15);
 }

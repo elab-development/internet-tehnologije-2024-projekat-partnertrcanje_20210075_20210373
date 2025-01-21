@@ -1,4 +1,4 @@
-/* Input polja */
+
 input[type="text"],
 input[type="date"] {
   width: calc(100% - 22px);
@@ -16,7 +16,7 @@ input[type="date"]:focus {
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
 }
 
-/* Dugme */
+
 button {
   padding: 10px 20px;
   margin: 10px 0;
@@ -38,7 +38,7 @@ button:active {
   transform: scale(1);
 }
 
-/* Lista događaja */
+
 ul {
   margin-top: 20px;
 }

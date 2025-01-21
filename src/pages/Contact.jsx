@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Contact.css';
 
+
 const Contact = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

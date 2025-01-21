@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Breadcrumbs from './pages/Breadcrumbs';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
@@ -23,6 +24,7 @@ const App = () => {
         <Link to="/goals-tracker">Ciljevi</Link>
         <Link to="/filtered-pagination">Trkači</Link>
       </nav>
+      <Breadcrumbs />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
