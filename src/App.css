@@ -24,6 +24,7 @@ nav a {
 
 nav a:hover {
   background-color: #0056b3;
+  color:#fefdfd;
   border-radius: 5px;
 }
 
@@ -76,3 +77,4 @@ p {
   margin: 10px 0;
   font-size: 18px;
 }
+

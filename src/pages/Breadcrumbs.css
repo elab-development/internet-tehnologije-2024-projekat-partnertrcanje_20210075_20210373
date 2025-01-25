@@ -24,7 +24,7 @@
   }
   
   .breadcrumbs ul li a:hover {
-    color: #0056b3;
+    background-color: #e4f0fc;
   }
   
   .breadcrumbs ul li::after {
