@@ -12,6 +12,9 @@ const Home = () => {
   const goToRunnerSearch = () => {
     navigate('/runner-search'); 
   };
+  const goToRunningGroups = () => {
+    navigate('/running-groups'); 
+  };
   const [file, setFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState('');
 
@@ -41,17 +44,17 @@ const Home = () => {
         title="Grupa trkača"
         description="Započnite trčanje sa grupom u Beogradu!"
         imageUrl="/images/group.jpg"
-        onClick={openDetails}
+        onClick={goToRunningGroups}
       />
-      <Button text="Pogledaj detalje" onClick={openDetails} />
+      &emsp;<Button text="Pogledaj detalje" onClick={openDetails} />
       <Card
         title="Trkači"
         description="Započnite trčanje sa novim trkačima!"
         imageUrl="/images/trkac.jpeg"
         onClick={goToRunnerSearch}
       />
+      &emsp;<Button text="Pogledaj detalje" onClick={openDetails} />
 
-      <Button text="Pogledaj detalje" onClick={openDetails} />
       <h2>Upload fajlova</h2>
       <form onSubmit={handleUpload}>
         <input type="file" onChange={handleFileChange} />
