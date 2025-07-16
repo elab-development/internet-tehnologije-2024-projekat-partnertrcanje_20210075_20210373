@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import  './NotificationSystem.css';
 
 const NotificationSystem = () => {
   const [notifications, setNotifications] = useState([]);
+
+  useEffect(()=>{
+    console.log("New notification!");
+  },[notifications]);
 
   const addNotification = (message) => {
     setNotifications([...notifications, message]);
