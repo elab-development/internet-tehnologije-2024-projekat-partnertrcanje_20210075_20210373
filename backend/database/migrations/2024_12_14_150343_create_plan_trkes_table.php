@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('statistika_trkes', function (Blueprint $table) {
+        Schema::create('plan_trkes', function (Blueprint $table) {
             $table->id();
+            $table->dateTime('vreme');
+            $table->string('mesto');
+            $table->date('datum');
+            $table->decimal('planirani_km', 5, 2);
             $table->timestamps();
         });
     }
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('statistika_trkes');
+        Schema::dropIfExists('plan_trkes');
     }
 };

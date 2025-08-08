@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('trkacs', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('trkacs', function (Blueprint $table) {
+            $table->string('role')->default('trkac'); // Default vrednost može biti 'trkac' ili nešto drugo prema potrebi
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trkacs');
+        Schema::table('trkacs', function (Blueprint $table) {
+            //
+        });
     }
 };
