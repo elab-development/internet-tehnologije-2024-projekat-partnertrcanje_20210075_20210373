@@ -1,0 +1,43 @@
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+
+  textarea {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  
+ 
+  
+
+  div[data-comment-container] {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+  }
+  
+
+  div[data-comment-container] button {
+    margin-right: 0;
+  }
+  
+
+  .comments-container {
+    margin-top: 10px;
+  }
+  
