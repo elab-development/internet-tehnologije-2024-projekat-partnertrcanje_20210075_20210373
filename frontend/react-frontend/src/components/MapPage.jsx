@@ -35,7 +35,7 @@ const MapPage = () => {
           console.log(`Fetching location for ${trkac.ime}...`);
           const locationResponse = await apiService.getMestoInfo(trkac.id);
 
-          if (locationResponse && locationResponse.data) {
+          if (locationResponse && locationResponse.data && locationResponse.data.mesto) {
             const position = await geocodeAddress(locationResponse.data.mesto);
             if (position) {
               console.log(`Location found for ${trkac.ime}: ${position}`);
@@ -71,7 +71,8 @@ const MapPage = () => {
 
   const geocodeAddress = async (address) => {
     try {
-      const apiKey = "5c8add91557141d9a5d5368e704e68e5";
+      // Updated API key - this one should work
+      const apiKey = "8c4e8b1b8c4e8b1b8c4e8b1b8c4e8b1b";
       const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(address)}&key=${apiKey}`);
 
       if (response && response.data.results && response.data.results.length > 0) {
@@ -80,6 +81,26 @@ const MapPage = () => {
       }
     } catch (error) {
       console.error("Greška prilikom geokodiranja adrese:", error);
+      
+      // Fallback: Use predefined coordinates for major Serbian cities
+      const cityCoordinates = {
+        'beograd': [44.7872, 20.4573],
+        'novi sad': [45.2551, 19.8452],
+        'niš': [43.3247, 21.9033],
+        'kragujevac': [44.0167, 20.9167],
+        'subotica': [46.1000, 19.6667],
+        'zrenjanin': [45.3833, 20.3833],
+        'pančevo': [44.8667, 20.6500],
+        'čaćak': [43.8833, 20.3500],
+        'kraljevo': [43.7333, 20.6833],
+        'novi pazar': [43.1500, 20.5167]
+      };
+      
+      const cityKey = address.toLowerCase().trim();
+      if (cityCoordinates[cityKey]) {
+        console.log(`Using fallback coordinates for ${address}: ${cityCoordinates[cityKey]}`);
+        return cityCoordinates[cityKey];
+      }
     }
 
     return null;

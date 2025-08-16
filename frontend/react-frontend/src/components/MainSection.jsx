@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 import "./MainSection.css";
 import { Button } from "./Button";
@@ -11,19 +12,23 @@ import Counter from './Counter';
 import { apiService } from "./ApiService";
 
 function MainSection() {
+  const navigate = useNavigate();
   const userRole = apiService.getLoginInfo().role;
   const clients = [
     {
+      id: 1,
       name: "Marko",
       text: "Running Partner aplikacija mi je promenila život! Osim što sam pronašao fantastične trkače u mom kraju, osećam se kao deo globalne trkačke zajednice. Ovde sam otkrio neverovatne staze, stekao prijatelje iz drugih zemalja i podigao svoje trčanje na potpuno novi nivo!",
       src: Image1,
     },
     {
+      id: 2,
       name: "Jasna",
       text: "Za mene, Running Partner nije samo aplikacija - to je avantura. Zahvaljujući njoj, trčim s ljudima iz cele Srbije. Osetio sam snagu zajedništva dok smo delili utiske, planirali trke i jednostavno uživali u svakom kilometru zajedno.",
       src: Image2,
     },
     {
+      id: 3,
       name: "Milica",
       text: "Koristim Running Partner već neko vreme i mogu reći da je ovo mnogo više od obične fitness aplikacije. Ovde sam pronašao ne samo partnere za trčanje već i inspiraciju, motivaciju i pravu trkačku porodicu. Aplikacija koja stvara prijateljstva na putu ka ciljevima.",
       src: Image3,
@@ -34,7 +39,7 @@ function MainSection() {
   return (
     <>
       <div className="main-container">
-        <image src={Naslovna} />
+        <img src={Naslovna} alt="Running Partner" style={{ display: 'none' }} />
         <h1>Pronađi i ti svog idealnog partnera za trčanje</h1>
 
 
@@ -43,7 +48,7 @@ function MainSection() {
             buttonStyle="btn--outline"
             buttonSize="btn--large"
             onClick={() => {
-              window.location.href = "/kreiraj-plan";
+              navigate("/kreiraj-plan");
             }}
           >
             KREIRAJ PLAN TRKE!
@@ -53,7 +58,7 @@ function MainSection() {
             buttonStyle="btn--outline"
             buttonSize="btn--large"
             onClick={() => {
-              window.location.href = "/login";
+              navigate("/login");
             }}
           >
             PRIDRUŽI SE TRKAČIMA!

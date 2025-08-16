@@ -1,5 +1,5 @@
 .main-container {
-  background: linear-gradient(transparent, black), url("../assets/naslovnaTrkac.png") center top/cover no-repeat;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.8), rgba(59, 130, 246, 0.8)), url("../assets/naslovnaTrkac.png") center top/cover no-repeat;
   background-size: cover;
   height: 90vh;
   width: 100%;
@@ -7,32 +7,51 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.3);
   object-fit: contain;
+  position: relative;
+}
+
+.main-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+  z-index: 1;
 }
 
 .main-container > h1 {
-  color: #fff;
+  color: #ffffff;
   font-size: 70px;
   margin-top: 440px; 
   margin-bottom: 5px;
   text-align: center;
   line-height: 1.2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: 700;
+  z-index: 2;
+  position: relative;
 }
 
 .main-container > p {
   margin-top: 16px;
-  color: #fff;
+  color: #ffffff;
   font-size: 24px;
   text-align: center;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   line-height: 1.5;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  z-index: 2;
+  position: relative;
 }
 
 .main-text {
   height: auto;
-  background-image: url("../assets/slikaMape.png"); 
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
   background-size: cover; 
   background-position: center;
   width: 100%;
@@ -40,20 +59,34 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: inset 0 0 0 1000px rgba(20, 13, 6, 0.7);
-  object-fit: contain;
+  padding: 60px 0;
+  position: relative;
+}
+
+.main-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("../assets/slikaMape.png") center/cover;
+  opacity: 0.1;
+  z-index: 0;
 }
 
 .main-text > h1 {
-  color: black;
+  color: #1e293b;
   font-size: 60px;
   margin-top: 16px;
   text-align: center;
   line-height: 1.2;
+  z-index: 1;
+  position: relative;
 }
 
 .main-text > h3 {
-  color: #000000;
+  color: #10b981;
   font-size: 34px;
   margin-top: 20px;
   margin-bottom: 30px;
@@ -63,37 +96,58 @@
   font-variant: normal;
   font-weight: 400;
   line-height: 1.5;
+  z-index: 1;
+  position: relative;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .main-text > p {
   margin: 20px 100px;
-  color: #000000;
+  color: #475569;
   font-size: 20px;
   text-align: center;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-  text-align: justify;
+    text-align: justify;
   font-style: normal;
   font-variant: normal;
   font-weight: 400;
   line-height: 1.5;
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
-  padding: 16px;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
+  padding: 24px;
   margin-top: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  border-left: 4px solid #10b981;
+  z-index: 1;
+  position: relative;
 }
 
 .main-btns {
   margin-top: 32px;
+  z-index: 2;
+  position: relative;
 }
 
 .main-btns .btn {
   margin: 6px;
 }
 
+.main-clients {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  padding: 60px 0;
+  width: 100%;
+}
+
 @media screen and (max-width: 960px) {
   .main-container > h1 {
     font-size: 50px;
     margin-top: 160px;
+  }
+  
+  .main-text > p {
+    margin: 20px 40px;
+    padding: 20px;
   }
 }
 
@@ -102,6 +156,14 @@
     font-size: 36px;
     margin-top: 120px;
   }
-
-
+  
+  .main-text > h3 {
+    font-size: 28px;
+  }
+  
+  .main-text > p {
+    margin: 20px 20px;
+    padding: 16px;
+    font-size: 18px;
+  }
 }

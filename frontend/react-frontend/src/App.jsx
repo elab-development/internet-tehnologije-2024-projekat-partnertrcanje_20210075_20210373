@@ -14,8 +14,8 @@ import Runners from "./components/Runners";
 import PlanRun from "./components/PlanRun";
 import StatisticRun from "./components/StatisticRun";
 import MapPage from "./components/MapPage";
-import EndRun from './components/EndRun';
-import Comments from './components/Comments';
+import EndRun from './components/EndRun.jsx';
+import Comments from './components/Comments.jsx';
 import AllStatistics from './components/AllStatistics';
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/registracija" element={<Registration />} />
         <Route path="/login" element={<Login updateToken={(token) => setToken(token)} />} ></Route>
-        <Route path="/logout" element={<Navigate to="/" />}></Route>
+        <Route path="/logout" element={<Navigate to="/" />} ></Route>
         <Route path="/moj-nalog" element={<Profile />} />
         <Route path="/kreiraj-plan" element={<CreatePlan />} />
         <Route path="/trkaci" element={<Runners />} />
@@ -39,10 +39,10 @@ function App() {
         <Route path="/zavrsi-trku/:planId" element={<EndRun />} />
         <Route path="/komentari" element={<Comments />} />
         <Route path="/sve-statistike" element={<AllStatistics />} />
-
       </Routes>
       <Footer />
     </Router>
   );
 }
+
 export default App;

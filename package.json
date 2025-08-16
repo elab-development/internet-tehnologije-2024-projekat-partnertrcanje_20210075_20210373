@@ -1,7 +1,7 @@
 {
   "name": "trcanjepartner",
   "version": "1.0.0",
-  "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg\" width=\"400\" alt=\"Laravel Logo\"></a></p>",
+  "description": "Running Partner - A modern running community application with Laravel backend and React frontend",
   "main": "postcss.config.js",
   "type": "module",
   "directories": {
@@ -9,12 +9,23 @@
   },
   "scripts": {
     "dev": "vite",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend:install": "cd backend && composer install",
+    "backend:serve": "cd backend && php artisan serve",
+    "backend:migrate": "cd backend && php artisan migrate",
+    "backend:seed": "cd backend && php artisan db:seed",
+    "frontend:install": "cd frontend/react-frontend && npm install",
+    "frontend:dev": "cd frontend/react-frontend && npm run dev",
+    "frontend:build": "cd frontend/react-frontend && npm run build",
+    "install:all": "npm run backend:install && npm run frontend:install",
+    "dev:all": "concurrently \"npm run backend:serve\" \"npm run frontend:dev\"",
+    "setup": "npm run install:all && npm run backend:migrate"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["running", "community", "laravel", "react", "fitness"],
+  "author": "Running Partner Team",
   "license": "ISC",
   "devDependencies": {
-    "vite": "^6.0.3"
+    "vite": "^6.0.3",
+    "concurrently": "^8.2.2"
   }
 }
