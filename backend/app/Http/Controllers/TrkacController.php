@@ -60,7 +60,7 @@ class TrkacController extends Controller
 
     public function show($id)
     {
-        $trkac = Trkac::with('prijatelji')->find($id);
+        $trkac = Trkac::find($id);
         if ($trkac) {
             return new TrkacResource($trkac);
         } else {

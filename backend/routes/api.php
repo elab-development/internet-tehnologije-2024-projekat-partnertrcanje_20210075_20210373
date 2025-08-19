@@ -64,7 +64,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     });
     Route::get('/trkaci/{id}', [TrkacController::class, 'show']);
-    Route::get('/trkaci/{id}/mesto', [TrkacController::class, 'getMestoInfo']);
+    // Public mesto info for map markers (no auth to allow map to render without token)
+    Route::get('/trkaci/{id}/mesto', [TrkacController::class, 'getMestoInfo'])->withoutMiddleware(['auth:sanctum']);
     Route::get('/komentari/{planTrkeId}', [KomentarController::class, 'getKomentariOnPlanTrke']);
 
 
