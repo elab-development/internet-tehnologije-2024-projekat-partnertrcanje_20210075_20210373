@@ -55,35 +55,31 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
+        // Prvo proveravamo users tabelu (za admin korisnike)
         $user = User::where('email', $credentials['email'])->first();
 
         if ($user) {
-
             if (Hash::check($credentials['password'], $user->password)) {
-
-                $userType = 'user';
+                $userType = $user->role; // 'admin' ili 'user'
+                $role = $user->role;
             } else {
                 return response()->json(['message' => 'Pogrešna lozinka.'], 404);
             }
         } else {
-
+            // Ako nije u users tabeli, proveravamo trkacs tabelu
             $trkac = Trkac::where('email', $credentials['email'])->first();
             if ($trkac && Hash::check($credentials['password'], $trkac->password)) {
-
                 $userType = 'trkac';
+                $role = 'trkac';
                 $user = $trkac;
             } else {
                 return response()->json(['message' => 'Pogrešna email adresa ili lozinka.'], 404);
             }
         }
 
-
-        $role = $user->role;
         if (!$role) {
             return response()->json(['message' => 'Korisnik nema definisanu ulogu.'], 404);
         }
-
-
 
         $token = $user->createToken('auth_token')->plainTextToken;
 

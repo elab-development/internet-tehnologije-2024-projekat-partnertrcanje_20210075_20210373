@@ -23,17 +23,45 @@ const Registration = () => {
 
   const handleRegistration = async () => {
     console.log('Register button clicked');
+    console.log('Form data:', formData);
+    
     try {
+      console.log('Calling apiService.register...');
       const response = await apiService.register(formData);
+      console.log('Registration response:', response);
+      console.log('Response data:', response.data);
+      
+      // Proveri da li je registracija uspešna
+      if (response.data[0] === 'Greska pri registraciji!') {
+        // Greška validacije
+        const errors = response.data[1];
+        console.error('Validation errors:', errors);
+        
+        // Prikaži greške korisniku
+        let errorMessage = 'Greške pri registraciji:\n';
+        Object.keys(errors).forEach(key => {
+          errorMessage += `${key}: ${errors[key].join(', ')}\n`;
+        });
+        
+        alert(errorMessage);
+        return;
+      }
+      
+      // Uspešna registracija
+      console.log('Access token:', response.data.access_token);
 
       apiService.setToken(response.data.access_token);
-      console.log(response.data);
+      console.log('Token set:', response.data.access_token);
 
       apiService.setLoginInfo(response.data.role, formData.email);
+      console.log('Login info set');
+      
+      // alert('Registracija uspešna! Sada se možete ulogovati.');
       navigate("/login");
     } catch (error) {
-
       console.error('Greška prilikom registracije:', error);
+      console.error('Error details:', error.response?.data);
+      // alert('Greška pri registraciji: ' + (error.response?.data?.message || error.message));
     }
   };
 

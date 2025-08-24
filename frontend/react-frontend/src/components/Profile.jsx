@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { apiService } from './ApiService';
 import './Profile.css';
 import { Link } from 'react-router-dom';
 import ImageUpload from './ImageUpload';
+import userImage from '../assets/user.png';
 
 
 const Profile = () => {
@@ -16,8 +17,20 @@ const Profile = () => {
         const trkacData = await apiService.getLoggedInTrkac();
         if (trkacData && trkacData.trkac) {
           setTrkac(trkacData.trkac);
-          const imageUrl = await apiService.getTrkacImage(trkacData.trkac.id);
-          setProfileImage(imageUrl);
+          
+          // Pokušaj da dohvatiš sliku, ali ne baci grešku ako ne postoji
+          try {
+            const imageUrl = await apiService.getTrkacImage(trkacData.trkac.id);
+            if (imageUrl) {
+              setProfileImage(imageUrl);
+            } else {
+              // Ako nema slike, koristi default sliku
+              setProfileImage(userImage);
+            }
+          } catch (imageError) {
+            console.log('Koristi se default slika');
+            setProfileImage(userImage);
+          }
         } else {
           console.error('Nemogućnost dobijanja podataka za ulogovanog trkača');
         }

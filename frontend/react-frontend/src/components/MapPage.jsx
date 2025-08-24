@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -10,79 +10,25 @@ import WeatherApi from "./WeatherApi";
 
 const MapPage = () => {
 
-  const myIcon = new L.Icon({
+  const myIcon = useMemo(() => new L.Icon({
     iconUrl: mapaPin,
     iconSize: [40, 40],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
-  });
+  }), []);
 
   const [trkaci, setTrkaci] = useState([]);
   const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
-    apiService.getTrkaci().then((response) => {
-      setTrkaci(response.data.data || []);
+    apiService.getAllTrkaciForMap().then((response) => {
+      setTrkaci(response.data);
     });
   }, []);
 
-  useEffect(() => {
-    const fetchMarkers = async () => {
-      console.log("Fetching markers...");
-
-      const markersArray = await Promise.all(
-        trkaci.map(async (trkac) => {
-          console.log(`Fetching location for ${trkac.ime}...`);
-          const locationResponse = await apiService.getMestoInfo(trkac.id);
-
-          if (locationResponse && locationResponse.data && locationResponse.data.mesto) {
-            const position = await geocodeAddress(locationResponse.data.mesto);
-            if (position) {
-              console.log(`Location found for ${trkac.ime}: ${position}`);
-              return {
-                id: trkac.id,
-                position: position,
-                ime: trkac.ime,
-              };
-            }
-          }
-          console.log(`Location not found for ${trkac.ime}`);
-          return null;
-        })
-      );
-
-      setMarkers(markersArray.filter((marker) => marker !== null));
-      console.log("Markers fetched:", markersArray);
-    };
-    if (trkaci.length > 0) {
-      fetchMarkers();
-    }
-  }, [trkaci]);
-
-  const mapStyles = {
-    height: "500px",
-    width: "100%",
-    margin: "20px 0",
-    borderRadius: "8px",
-    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-  };
-
-  const defaultLocation = [44.7872, 20.4573];
-
-  const geocodeAddress = async (address) => {
+  const geocodeAddress = useCallback(async (address) => {
     try {
-      // Updated API key - this one should work
-      const apiKey = "8c4e8b1b8c4e8b1b8c4e8b1b8c4e8b1b";
-      const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(address)}&key=${apiKey}`);
-
-      if (response && response.data.results && response.data.results.length > 0) {
-        const { lat, lng } = response.data.results[0].geometry;
-        return [lat, lng];
-      }
-    } catch (error) {
-      console.error("Greška prilikom geokodiranja adrese:", error);
-      
-      // Fallback: Use predefined coordinates for major Serbian cities
+      // Koristimo samo fallback koordinate za glavne gradove
       const cityCoordinates = {
         'beograd': [44.7872, 20.4573],
         'novi sad': [45.2551, 19.8452],
@@ -93,17 +39,85 @@ const MapPage = () => {
         'pančevo': [44.8667, 20.6500],
         'čaćak': [43.8833, 20.3500],
         'kraljevo': [43.7333, 20.6833],
-        'novi pazar': [43.1500, 20.5167]
+        'novi pazar': [43.1500, 20.5167],
+        'leskovac': [42.9981, 21.9460],
+        'vranje': [42.5511, 21.9003],
+        'uzice': [43.8564, 19.8444],
+        'smederevo': [44.6658, 20.9333],
+        'požarevac': [44.6214, 21.1878],
+        'šabac': [44.7538, 19.6906],
+        'sombor': [45.7742, 19.1142],
+        'zaječar': [43.9036, 22.2644],
+        'pancevo': [44.8667, 20.6500],
+        'kikinda': [45.8297, 20.4653]
       };
       
       const cityKey = address.toLowerCase().trim();
       if (cityCoordinates[cityKey]) {
-        console.log(`Using fallback coordinates for ${address}: ${cityCoordinates[cityKey]}`);
+        console.log(`Using coordinates for ${address}: ${cityCoordinates[cityKey]}`);
         return cityCoordinates[cityKey];
       }
+      
+      // Ako grad nije u listi, koristi default koordinate
+      console.log(`City ${address} not found, using default coordinates`);
+      return defaultLocation;
+    } catch (error) {
+      console.error("Greška prilikom geokodiranja adrese:", error);
+      return defaultLocation;
     }
+  }, []);
 
-    return null;
+  const defaultLocation = useMemo(() => [44.7872, 20.4573], []);
+
+  useEffect(() => {
+    const fetchMarkers = async () => {
+      if (trkaci.length === 0) return;
+      
+      console.log("Fetching markers...");
+
+      const markersArray = await Promise.all(
+        trkaci.map(async (trkac) => {
+          console.log(`Processing ${trkac.ime}...`);
+          
+          // Uvek kreiraj marker za svakog trkača
+          let position = defaultLocation;
+          
+          // Koristi direktno mesto iz trkac objekta
+          if (trkac.mesto) {
+            console.log(`Mesto found for ${trkac.ime}: ${trkac.mesto}`);
+            const geocodedPosition = await geocodeAddress(trkac.mesto);
+            if (geocodedPosition) {
+              position = geocodedPosition;
+              console.log(`Using geocoded position for ${trkac.ime}: ${position}`);
+            } else {
+              console.log(`Geocoding failed for ${trkac.ime}, using fallback coordinates`);
+            }
+          } else {
+            console.log(`No mesto for ${trkac.ime}, using fallback coordinates`);
+          }
+          
+          // Uvek vrati marker
+          return {
+            id: trkac.id,
+            position: position,
+            ime: trkac.ime,
+          };
+        })
+      );
+
+      setMarkers(markersArray.filter((marker) => marker !== null));
+      console.log("Markers fetched:", markersArray);
+    };
+    
+    fetchMarkers();
+  }, [trkaci, geocodeAddress]);
+
+  const mapStyles = {
+    height: "500px",
+    width: "100%",
+    margin: "20px 0",
+    borderRadius: "8px",
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
   };
 
   return (

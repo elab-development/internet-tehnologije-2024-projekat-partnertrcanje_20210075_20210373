@@ -101,6 +101,34 @@
 .social-icon-link {
   color: #fff;
   font-size: 24px;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.social-icon-link:hover {
+  transform: translateY(-3px);
+  color: #00d4ff;
+}
+
+.social-icon-link.facebook:hover {
+  color: #1877f2;
+}
+
+.social-icon-link.instagram:hover {
+  color: #e4405f;
+}
+
+.social-icon-link.youtube:hover {
+  color: #ff0000;
+}
+
+.social-icon-link.twitter:hover {
+  color: #1da1f2;
+}
+
+.social-icon-link.linkedin:hover {
+  color: #0077b5;
 }
 
 .social-media {

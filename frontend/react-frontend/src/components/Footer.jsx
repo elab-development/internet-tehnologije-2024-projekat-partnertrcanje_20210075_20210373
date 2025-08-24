@@ -25,7 +25,7 @@ function Footer() {
               target="_blank"
               rel="noreferrer"
               aria-label="Facebook">
-              <i className="fa-brands fa-facebook" />
+              <i className="fab fa-facebook" />
             </a>
             <a
               className="social-icon-link instagram"
@@ -33,7 +33,7 @@ function Footer() {
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram">
-              <i className="fa-brands fa-instagram" />
+              <i className="fab fa-instagram" />
             </a>
             <a
               className="social-icon-link youtube"
@@ -41,7 +41,7 @@ function Footer() {
               target="_blank"
               rel="noreferrer"
               aria-label="Youtube">
-              <i className="fa-brands fa-youtube" />
+              <i className="fab fa-youtube" />
             </a>
             <a
               className="social-icon-link twitter"
@@ -49,15 +49,15 @@ function Footer() {
               target="_blank"
               rel="noreferrer"
               aria-label="Twitter">
-              <i className="fa-brands fa-x-twitter" />
+              <i className="fab fa-x-twitter" />
             </a>
             <a
-              className="social-icon-link twitter"
+              className="social-icon-link linkedin"
               href="https://www.linkedin.com/"
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn">
-              <i className="fa-brands fa-linkedin" />
+              <i className="fab fa-linkedin" />
             </a>
           </div>
         </div>

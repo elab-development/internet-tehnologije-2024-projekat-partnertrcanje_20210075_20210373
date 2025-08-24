@@ -13,16 +13,13 @@ class PlanTrkeController extends Controller
     {
         $query = PlanTrke::query();
 
-
         if ($request->has('mesto')) {
             $query->where('mesto', $request->mesto);
         }
 
-        $planovi_trka = PlanTrke::all();
         $planovi_trka = $query->paginate(10);
 
         return PlanTrkeResource::collection($planovi_trka);
-
     }
 
 
@@ -39,7 +36,11 @@ class PlanTrkeController extends Controller
             return response()->json(['Greska pri validaciji!', $validator->errors()]);
         }
 
+        // Dodajemo trkac_id iz autentifikovanog korisnika
+        $trkacId = auth()->user()->id;
+
         $planTrke = PlanTrke::create([
+            'trkac_id' => $trkacId,
             'vreme' => $request->vreme,
             'mesto' => $request->mesto,
             'datum' => $request->datum,

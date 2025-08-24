@@ -12,13 +12,32 @@ const PlanRun = () => {
   const [noviKomentari, setNoviKomentari] = useState({});
   const [selectedPlanId, setSelectedPlanId] = useState(null);
   const [loadingComments, setLoadingComments] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
   const userRole = apiService.getLoginInfo().role;
 
-  useEffect(() => {
-    apiService.getPlanoviTrka().then((response) => {
+  const fetchPlanoviTrka = async (page = 1) => {
+    try {
+      setLoading(true);
+      const response = await apiService.getPlanoviTrka(page);
       setPlanoviTrka(response.data.data || []);
-    });
+      setTotalPages(response.data.meta?.last_page || 1);
+      setCurrentPage(page);
+    } catch (error) {
+      console.error('Greška pri dohvatanju planova trka:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlanoviTrka(1);
   }, []);
+
+  const handlePageChange = (page) => {
+    fetchPlanoviTrka(page);
+  };
 
   const fetchKomentari = async (planTrkeId) => {
     try {
@@ -67,6 +86,7 @@ const PlanRun = () => {
       await apiService.addKomentar(komentarData);
       setNoviKomentari({ ...noviKomentari, [planTrkeId]: '' });
       fetchKomentari(planTrkeId);
+      fetchPlanoviTrka(currentPage); // Refresh the current page after adding a comment
     } catch (error) {
       console.error('Greška pri dodavanju komentara:', error);
     }
@@ -192,6 +212,28 @@ const PlanRun = () => {
         </tbody>
       </table>
       <div className="background-behind-container"></div>
+      {loading && <p>Učitavanje...</p>}
+      {totalPages > 1 && (
+        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+          <Button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            style={{ marginRight: '10px' }}
+          >
+            Prethodna
+          </Button>
+          <span style={{ marginRight: '10px', color: 'white' }}>
+            Strana {currentPage} od {totalPages}
+          </span>
+          <Button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            style={{ marginLeft: '10px' }}
+          >
+            Sledeća
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

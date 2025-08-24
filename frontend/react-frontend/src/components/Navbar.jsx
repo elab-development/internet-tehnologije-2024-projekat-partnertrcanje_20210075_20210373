@@ -10,7 +10,43 @@ const Navbar = () => {
   const korisnik = apiService.getLoginInfo();
 
   const renderAuthLinks = () => {
-    if (korisnik.role === 'trkac') {
+    if (korisnik.role === 'admin') {
+      return (
+        <>
+          <li className={`navbar-item ${location.pathname === '/' ? 'active' : ''}`}>
+            <Link to="/" className="navbar-link">
+              Početna
+            </Link>
+          </li>
+          <li className={`navbar-item ${location.pathname === '/planovi-trka' ? 'active' : ''}`}>
+            <Link to="/planovi-trka" className="navbar-link">
+              Planovi trka
+            </Link>
+          </li>
+          <li className={`navbar-item ${location.pathname === '/sve-statistike' ? 'active' : ''}`}>
+            <Link to="/sve-statistike" className="navbar-link">
+              Sve statistike
+            </Link>
+          </li>
+          <li className={`navbar-item ${location.pathname === '/map' ? 'active' : ''}`}>
+            <Link to="/map" className="navbar-link">Trkači</Link>
+          </li>
+          <li className={`navbar-item ${location.pathname === '/komentari' ? 'active' : ''}`}>
+            <Link to="/komentari" className="navbar-link">Komentari</Link>
+          </li>
+          <li className={`navbar-item ${location.pathname === '/kreiraj-plan' ? 'active' : ''}`}>
+            <Link to="/kreiraj-plan" className="navbar-link">
+              Kreiraj plan
+            </Link>
+          </li>
+          <li className={`navbar-item ${location.pathname === '/logout' ? 'active' : ''}`}>
+            <Link to="/logout" className="navbar-link" onClick={() => { apiService.logout(); }}>
+              Odjavi se
+            </Link>
+          </li>
+        </>
+      );
+    } else if (korisnik.role === 'trkac') {
       return (
         <>
           <li className={`navbar-item ${location.pathname === '/' ? 'active' : ''}`}>

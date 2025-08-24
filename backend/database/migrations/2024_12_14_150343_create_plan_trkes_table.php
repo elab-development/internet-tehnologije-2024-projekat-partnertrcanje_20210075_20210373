@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('plan_trkes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('trkac_id');
             $table->dateTime('vreme');
             $table->string('mesto');
             $table->date('datum');
             $table->decimal('planirani_km', 5, 2);
             $table->timestamps();
+            
+            $table->foreign('trkac_id')->references('id')->on('trkacs')->onDelete('cascade');
         });
     }
 

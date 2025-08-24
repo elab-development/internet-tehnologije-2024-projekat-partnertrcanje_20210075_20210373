@@ -26,7 +26,17 @@ export function Login(props) {
         console.log('Id korisnika:', response.data.user.id);
         console.log('Token korisnika:', response.data.access_token);
         console.log(response.data);
-        navigate("/");
+        
+        // Prikaži uspešnu poruku
+        // alert(`Uspešno ste se ulogovali kao ${response.data.role}!`);
+        
+        // Preusmeri na početnu stranicu
+        window.location.href = "/";
+        
+        // Osveži stranicu da se prikaže da je korisnik ulogovan
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
       })
       .catch((error) => {
         setError(error.response.data.message);

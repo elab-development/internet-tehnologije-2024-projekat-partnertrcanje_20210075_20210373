@@ -108,13 +108,13 @@ class ApiService {
     return axios.get("http://localhost:8000/api/trkaci");
   }
 
+  getAllTrkaciForMap() {
+    return axios.get("http://localhost:8000/api/trkaci-all");
+  }
 
-  getPlanoviTrka() {
-    return axios.get("http://localhost:8000/api/planovi-trka", {
-      headers: {
-        Authorization: `Bearer ${apiService.getToken()}`,
-      },
-    });
+
+  getPlanoviTrka(page = 1) {
+    return axios.get(`http://localhost:8000/api/planovi-trka?page=${page}`);
   }
 
   async getStatistikeByTrkacId(trkacId) {
@@ -158,11 +158,7 @@ class ApiService {
 
 
   async getMestoInfo(trkacId) {
-    return axios.get(`http://localhost:8000/api/trkaci/${trkacId}/mesto`, {
-      headers: {
-        Authorization: `Bearer ${apiService.getToken()}`,
-      },
-    });
+    return axios.get(`http://localhost:8000/api/trkaci/${trkacId}/mesto`);
   }
 
   getTrkaciFilter(params) {
@@ -188,11 +184,7 @@ class ApiService {
 
 
   getKomentari(planTrkeId) {
-    return axios.get(`http://localhost:8000/api/komentari/${planTrkeId}`, {
-      headers: {
-        Authorization: `Bearer ${this.getToken()}`,
-      },
-    })
+    return axios.get(`http://localhost:8000/api/komentari/${planTrkeId}`)
       .then((response) => response.data.data || [])
       .catch((error) => {
         throw error;
@@ -254,7 +246,7 @@ class ApiService {
     try {
       const response = await axios.get('http://localhost:8000/api/komentari', {
         headers: {
-          Authorization: `Bearer ${apiService.getToken()}`,
+          Authorization: `Bearer ${this.getToken()}`,
         },
       });
       console.log("komentari", response.data);
@@ -285,10 +277,9 @@ class ApiService {
     try {
       const response = await axios.get(`http://localhost:8000/api/statistike-trke`, {
         headers: {
-          Authorization: `Bearer ${apiService.getToken()}`,
+          Authorization: `Bearer ${this.getToken()}`,
         },
-      }
-      );
+      });
       return response.data;
     } catch (error) {
       throw error;
@@ -307,7 +298,15 @@ class ApiService {
       return imageUrl;
     } catch (error) {
       console.error('Greška pri dohvatanju slike trkača:', error);
-      throw error;
+      
+      // Ako je 404 (slika ne postoji), vrati null
+      if (error.response && error.response.status === 404) {
+        console.log('Trkač nema sliku, koristi se default slika');
+        return null;
+      }
+      
+      // Za ostale greške, vrati null
+      return null;
     }
   }
 

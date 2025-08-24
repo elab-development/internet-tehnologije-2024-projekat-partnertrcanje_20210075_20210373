@@ -9,12 +9,17 @@ class PlanTrke extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'trkac_id',
         'vreme',
         'mesto',
         'datum',
         'planirani_km'
-
     ];
+
+    public function trkac()
+    {
+        return $this->belongsTo(Trkac::class);
+    }
 
     public function komentari()
     {

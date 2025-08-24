@@ -3,8 +3,11 @@ import RunForm from './RunForm';
 import './CreatePlan.css';
 import { apiService } from './ApiService';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const KreirajPlan = () => {
+  const navigate = useNavigate();
+
   const handleRunFormSubmit = async (formData) => {
 
     try {
@@ -17,6 +20,11 @@ const KreirajPlan = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+
+      // Nakon uspešnog kreiranja, idemo na stranicu sa planovima
+      setTimeout(() => {
+        navigate('/planovi-trka');
+      }, 1500);
     } catch (error) {
       console.error('Error submitting run form:', error);
       Swal.fire({

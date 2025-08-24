@@ -27,6 +27,12 @@ class TrkacController extends Controller
         return TrkacResource::collection($trkaci);
     }
 
+    public function getAllTrkaciForMap()
+    {
+        $trkaci = Trkac::select('id', 'ime', 'prezime', 'mesto')->get();
+        return response()->json($trkaci);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -105,13 +111,26 @@ class TrkacController extends Controller
 
     public function getMestoInfo($id)
     {
-        $trkac = Trkac::find($id);
-
-        if (!$trkac) {
-            return response()->json(['error' => 'Trkac nije pronadjen'], 404);
+        try {
+            $trkac = Trkac::find($id);
+            
+            if (!$trkac) {
+                \Log::info("Trkac with ID {$id} not found");
+                return response()->json(['error' => 'Trkac nije pronadjen'], 404);
+            }
+            
+            \Log::info("Found trkac: ID {$id}, Ime: {$trkac->ime}, Mesto: {$trkac->mesto}");
+            
+            if (empty($trkac->mesto)) {
+                \Log::warning("Trkac {$trkac->ime} (ID: {$id}) has no mesto");
+                return response()->json(['error' => 'Trkac nema mesto'], 404);
+            }
+            
+            return response()->json(['mesto' => $trkac->mesto]);
+        } catch (\Exception $e) {
+            \Log::error("Error in getMestoInfo for ID {$id}: " . $e->getMessage());
+            return response()->json(['error' => 'Greška na serveru: ' . $e->getMessage()], 500);
         }
-
-        return response()->json(['mesto' => $trkac->mesto]);
     }
 
 
@@ -145,11 +164,25 @@ class TrkacController extends Controller
 
     public function prikaziSliku($id)
     {
-        $trkac = Trkac::findOrFail($id);
-
-        $putanjaSlike = $trkac->slika;
-
-        return Storage::response($putanjaSlike);
+        try {
+            $trkac = Trkac::findOrFail($id);
+            
+            // Proveri da li trkac ima sliku
+            if (!$trkac->slika || empty($trkac->slika)) {
+                return response()->json(['error' => 'Trkač nema sliku'], 404);
+            }
+            
+            $putanjaSlike = $trkac->slika;
+            
+            // Proveri da li fajl postoji u storage-u
+            if (!Storage::exists($putanjaSlike)) {
+                return response()->json(['error' => 'Slika nije pronađena'], 404);
+            }
+            
+            return Storage::response($putanjaSlike);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Greška pri učitavanju slike: ' . $e->getMessage()], 500);
+        }
     }
 
 

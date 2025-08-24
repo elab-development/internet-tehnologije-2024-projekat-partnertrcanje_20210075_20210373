@@ -27,6 +27,10 @@ use App\Http\Controllers\SlikaController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+// Javne rute za planove trka i komentare
+Route::get('/planovi-trka', [PlanTrkeController::class, 'index']);
+Route::get('/komentari/{planTrkeId}', [KomentarController::class, 'getKomentariOnPlanTrke']);
+
 
 // Rute koje zahtevaju autentifikaciju
 
@@ -59,14 +63,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     });
 
-    Route::prefix('planovi-trka')->group(function () {
-        Route::get('/', [PlanTrkeController::class, 'index']);
-
-    });
     Route::get('/trkaci/{id}', [TrkacController::class, 'show']);
     // Public mesto info for map markers (no auth to allow map to render without token)
     Route::get('/trkaci/{id}/mesto', [TrkacController::class, 'getMestoInfo'])->withoutMiddleware(['auth:sanctum']);
-    Route::get('/komentari/{planTrkeId}', [KomentarController::class, 'getKomentariOnPlanTrke']);
 
 
     // Rute koje su dostupne samo ulozi 'user'
@@ -88,6 +87,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::post('/trkaci/{id}/upload-slike', [SlikaController::class, 'uploadSlike']);
 Route::get('/trkaci', [TrkacController::class, 'index']);
+Route::get('/trkaci-all', [TrkacController::class, 'getAllTrkaciForMap']);
 Route::get('/trkaci/{id}/slika', [TrkacController::class, 'prikaziSliku']);
 
 
